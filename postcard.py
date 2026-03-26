@@ -214,9 +214,9 @@ def draw_front(c):
 
     # Fun facts section
     facts = [
-        ("FACT 1", "ECOLOGY", "Lives in open sandy/muddy seafloors with no hiding spots, driving its unique mimicry as predator defense."),
-        ("FACT 2", "ECOLOGY", "Chooses its disguise based on the specific predator: mimics sea snakes to deter damselfish."),
-        ("FACT 3", "EVOLUTION", "Can impersonate 15+ species including lionfish, flatfish, and stingrays by reshaping its body and swimming pattern."),
+        ("FACT 1", "ECOLOGY", "Chooses from its 15+ disguises based on the specific predator. For example, it mimics sea snakes to deter damselfish."),
+        ("FACT 2", "ECOLOGY", "In 2011, researchers found the mimic octopus has its own copycat: the harlequin jawfish, which shadows the octopus and blends in with its arm coloring to avoid detection."),
+        ("FACT 3", "EVOLUTION", "It also uses mimicry offensively to hunt. For example, it pretends to be a crab seeking a mate, then devours the deceived crab."),
     ]
 
     label_colors = {
@@ -337,8 +337,8 @@ def draw_back(c):
     # PS
     ps_text = (
         "P.S. Hey Professor Lynn, I am a computer science student and I created "
-        "this postcard in code with a language called Python. The picture is "
-        "digital but not from the internet! I have also attached my code just "
+        "this postcard in code with a programming language called Python. The picture is "
+        "digital but not from the internet, I created it myself! I have attached a link to my code "
         "in case you're curious :)."
     )
     c.setFont("Helvetica-Oblique", 7)
@@ -366,6 +366,31 @@ def draw_back(c):
     c.setStrokeColor(TEAL)
     c.setLineWidth(1.5)
     c.rect(stamp_x, stamp_y, 48, 40, fill=1, stroke=1)
+
+    # Maple leaf on stamp — coordinates from turtle graphics implementation
+    # Source: https://stackoverflow.com/a/74275513 (CC BY-SA 4.0)
+    # Turtle coords are already in standard Cartesian (Y-up), same as PDF
+    leaf_pts = [
+        (1, -3), (5, -4), (4, -3), (9, 1), (7, 2), (8, 5),
+        (5, 4), (5, 5), (3, 4), (4, 9), (2, 7), (0, 10),
+        (-2, 7), (-4, 8), (-3, 3), (-5, 6), (-5, 4), (-8, 5),
+        (-7, 2), (-9, 1), (-4, -3), (-5, -4), (0, -3),
+        (0, -7), (0, -6), (1, -3),
+    ]
+    leaf_cx = stamp_x + 24
+    leaf_cy = stamp_y + 23
+    ls = 1.45
+    c.setFillColor(colors.HexColor("#ff0000"))
+    c.setStrokeColor(colors.HexColor("#cc0000"))
+    c.setLineWidth(0.3)
+    p = c.beginPath()
+    px0, py0 = leaf_pts[0]
+    p.moveTo(leaf_cx + px0 * ls, leaf_cy + py0 * ls)
+    for px, py in leaf_pts[1:]:
+        p.lineTo(leaf_cx + px * ls, leaf_cy + py * ls)
+    p.close()
+    c.drawPath(p, fill=1, stroke=1)
+
     c.setFillColor(CYAN_LIGHT)
     c.setFont("Helvetica-Bold", 5)
     c.drawCentredString(stamp_x + 24, stamp_y + 5, "CANADA")
@@ -379,9 +404,9 @@ def draw_back(c):
     c.setFont("Helvetica", 9)
     addr_lines = [
         "Professor & BIOL 111 Team",
-        "Department of Zoology",
+        "Department of Biology",
         "University of British Columbia",
-        "Vancouver, BC  V6T 1Z4",
+        "Vancouver, BC  B1O 1L1",
     ]
     ay = BY + BH - 98
     for line in addr_lines:
